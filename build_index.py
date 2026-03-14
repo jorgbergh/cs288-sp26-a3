@@ -19,7 +19,7 @@ from tqdm import tqdm
 
 CORPUS_FILE = "corpus.jsonl"
 DATASTORE_DIR = "datastore"
-EMBEDDING_MODEL_NAME = "BAAI/bge-small-en-v1.5"
+EMBEDDING_MODEL_NAME = "sentence-transformers/all-MiniLM-L6-v2"
 CHUNK_SIZE = 500
 CHUNK_OVERLAP = 100
 

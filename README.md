@@ -31,7 +31,7 @@ datastore/
   chunks.json
   bm25_index.pkl
   faiss_index.bin
-  embedding_model/     # BAAI/bge-small-en-v1.5 saved locally
+  embedding_model/     # all-MiniLM-L6-v2 saved locally
 ```
 
 You can copy these files in from another machine instead of rebuilding them.
@@ -69,7 +69,7 @@ Reads one question per line from the input file, writes one answer per line to t
 │                                                                                │
 │  corpus.jsonl ──▶ Clean & Chunk ──┬──▶ BM25 Index ──────┐                      │
 │                   (~500 chars)    │                      ├──▶ datastore/        │
-│                                   └──▶ BGE Embeddings ──▶ FAISS Index ──┘      │
+│                                   └──▶ MiniLM Embeddings ──▶ FAISS Index ──┘      │
 │                                                                                │
 └────────────────────────────────────────────────────────────────────────────────-┘
 
@@ -84,7 +84,7 @@ Reads one question per line from the input file, writes one answer per line to t
 
 The system has two phases:
 
-**Offline** — `build_index.py` reads the crawled corpus, strips boilerplate (breadcrumbs, nav elements), and splits each page into ~500-character chunks with overlap. Each chunk is indexed in two ways: a BM25 sparse index for keyword matching, and a FAISS dense index using `BAAI/bge-small-en-v1.5` embeddings (384-dim, ~130MB) for semantic similarity.
+**Offline** — `build_index.py` reads the crawled corpus, strips boilerplate (breadcrumbs, nav elements), and splits each page into ~500-character chunks with overlap. Each chunk is indexed in two ways: a BM25 sparse index for keyword matching, and a FAISS dense index using `all-MiniLM-L6-v2` embeddings (384-dim, ~80MB) for semantic similarity.
 
 **Runtime** — For each question, `rag.py` queries both indices in parallel. BM25 catches exact keyword matches (e.g. names, course numbers). FAISS catches semantically similar passages even when wording differs. The two ranked lists are merged using Reciprocal Rank Fusion (RRF) and the top 5 chunks are kept.
 

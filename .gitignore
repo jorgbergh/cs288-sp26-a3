@@ -2,6 +2,7 @@
 datastore/embedding_model/model.safetensors
 datastore/bm25_index.pkl
 datastore/faiss_index.bin
+submission.zip
 
 # Environment
 .env

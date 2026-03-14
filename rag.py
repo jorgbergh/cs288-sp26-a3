@@ -61,9 +61,6 @@ SYSTEM_PROMPT = (
     "Output ONLY the answer, nothing else. No explanations, no full sentences."
 )
 
-# BGE query instruction prefix
-BGE_QUERY_PREFIX = "Represent this sentence for searching relevant passages: "
-
 TOKENIZE_RE = re.compile(r"[a-zA-Z0-9]+")
 
 
@@ -94,9 +91,14 @@ class RAGSystem:
         faiss_path = os.path.join(DATASTORE_DIR, "faiss_index.bin")
         self.faiss_index = faiss.read_index(faiss_path)
 
-        # Load embedding model
+        # Load embedding model (local copy or download from HuggingFace)
         model_path = os.path.join(DATASTORE_DIR, "embedding_model")
-        self.embed_model = SentenceTransformer(model_path)
+        if os.path.exists(model_path):
+            self.embed_model = SentenceTransformer(model_path)
+        else:
+            print("  Local model not found, downloading all-MiniLM-L6-v2...", file=sys.stderr)
+            self.embed_model = SentenceTransformer("sentence-transformers/all-MiniLM-L6-v2")
+            self.embed_model.save(model_path)
 
         elapsed = time.time() - t0
         print(f"  Loaded in {elapsed:.1f}s ({len(self.chunks)} chunks)", file=sys.stderr)
@@ -110,9 +112,8 @@ class RAGSystem:
 
     def retrieve_dense(self, query: str, top_k: int = DENSE_TOP_K) -> list:
         """Retrieve top-k chunks using dense (FAISS) retrieval."""
-        query_with_prefix = BGE_QUERY_PREFIX + query
         query_vec = self.embed_model.encode(
-            [query_with_prefix], normalize_embeddings=True
+            [query], normalize_embeddings=True
         ).astype(np.float32)
         scores, indices = self.faiss_index.search(query_vec, top_k)
         return [(int(indices[0][i]), float(scores[0][i]))

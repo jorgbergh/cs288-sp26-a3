@@ -18,7 +18,6 @@ zip -r "$ZIP_NAME" \
     datastore/chunks.json \
     datastore/bm25_index.pkl \
     datastore/faiss_index.bin \
-    datastore/embedding_model/ \
     qa_dataset.jsonl \
     iaa_results.json
 
