@@ -1,0 +1,239 @@
+{
+  "dataset": "reference.jsonl",
+  "summary": {
+    "n": 10,
+    "exact_match": 0.5,
+    "f1": 0.55,
+    "retrieval_url_recall": 0.2,
+    "retrieval_answer_recall": 0.7,
+    "total_errors": 4,
+    "retrieval_misses": 3,
+    "generation_misses": 1
+  },
+  "per_question": [
+    {
+      "question": "What is the course number for the undergrad-level class that covers computer security topics such as cryptography, operating system security, network security, and software security?",
+      "gold_answers": [
+        "CS 161"
+      ],
+      "gold_url": "https://www2.eecs.berkeley.edu/Courses/CS/",
+      "prediction": "CS 161",
+      "raw_llm_response": "CS 161.",
+      "em": 1.0,
+      "f1": 1.0,
+      "url_retrieved": false,
+      "answer_in_chunks": true,
+      "error_type": null,
+      "retrieved_urls": [
+        "https://www2.eecs.berkeley.edu/Courses/EE",
+        "https://www2.eecs.berkeley.edu/Courses/CS",
+        "https://www2.eecs.berkeley.edu/Courses/CS",
+        "https://www2.eecs.berkeley.edu/Courses/EE",
+        "https://www2.eecs.berkeley.edu/Courses/CS"
+      ],
+      "llm_latency_s": 0.7600970268249512
+    },
+    {
+      "question": "Who is the CS student advisor?",
+      "gold_answers": [
+        "Gina Garcia",
+        "Floriberto Garcia",
+        "Grayson Johnston",
+        "Carol Marshall"
+      ],
+      "gold_url": "https://eecs.berkeley.edu/resources/undergrads/cs/advising/",
+      "prediction": "Gina Garcia, Floriberto Garcia, Grayson Johnston",
+      "raw_llm_response": "Gina Garcia, Floriberto Garcia, Grayson Johnston.",
+      "em": 0.0,
+      "f1": 0.5,
+      "url_retrieved": false,
+      "answer_in_chunks": true,
+      "error_type": null,
+      "retrieved_urls": [
+        "https://eecs.berkeley.edu/resources/undergrads/cs/advising",
+        "https://eecs.berkeley.edu/category/diversity",
+        "https://eecs.berkeley.edu/resources/undergrads/cs/advising",
+        "https://eecs.berkeley.edu/resources/grads/advisors",
+        "http://www.eecs.berkeley.edu/Students/Staff/grads-ee@berkeley.edu"
+      ],
+      "llm_latency_s": 0.45350193977355957
+    },
+    {
+      "question": "Which EECS graduate student was awarded a 2025 Paul & Daisy Soros Fellowship for New Americans?",
+      "gold_answers": [
+        "Syed Tahmid Mahbub"
+      ],
+      "gold_url": "https://eecs.berkeley.edu/news/graduate-student-syed-tahmid-mahbub-awarded-paul-daisy-soros-fellowship/",
+      "prediction": "Syed Tahmid Mahbub",
+      "raw_llm_response": "Syed Tahmid Mahbub.",
+      "em": 1.0,
+      "f1": 1.0,
+      "url_retrieved": false,
+      "answer_in_chunks": true,
+      "error_type": null,
+      "retrieved_urls": [
+        "https://eecs.berkeley.edu/news/graduate-student-syed-tahmid-mahbub-awarded-paul-daisy-soros-fellowship",
+        "https://eecs.berkeley.edu/news/page/7",
+        "https://eecs.berkeley.edu/news/dave-epstein-wins-2022-paul-daisy-soros-fellowship",
+        "https://eecs.berkeley.edu/category/research/page/20",
+        "https://eecs.berkeley.edu/category/people/students/page/8"
+      ],
+      "llm_latency_s": 0.9943022727966309
+    },
+    {
+      "question": "Who was the earliest-born professor at UC Berkeley?",
+      "gold_answers": [
+        "Lester Edwin Reukema"
+      ],
+      "gold_url": "https://eecs.berkeley.edu/people/faculty/in-memoriam/",
+      "prediction": "Joseph Thomas Gier",
+      "raw_llm_response": "Joseph Thomas Gier",
+      "em": 0.0,
+      "f1": 0.0,
+      "url_retrieved": false,
+      "answer_in_chunks": false,
+      "error_type": "retrieval_miss",
+      "retrieved_urls": [
+        "https://eecs.berkeley.edu/2019/03/a-salute-to-early-women-in-stem-at-uc-berkeley",
+        "https://eecs.berkeley.edu/2020/09/wicse-history",
+        "https://eecs.berkeley.edu/book/2021-2/alumni/merkle",
+        "https://eecs.berkeley.edu/2019/02/joseph-gier",
+        "https://eecs.berkeley.edu/category/people/page/33"
+      ],
+      "llm_latency_s": 0.25312209129333496
+    },
+    {
+      "question": "Who is the advisor of the student whose 2024 thesis is about protein evolution?",
+      "gold_answers": [
+        "Moritz Hardt",
+        "Jennifer Listgarten"
+      ],
+      "gold_url": "https://www2.eecs.berkeley.edu/Pubs/TechRpts/2024/EECS-2024-27.pdf",
+      "prediction": "Jennifer Listgarten",
+      "raw_llm_response": "Jennifer Listgarten",
+      "em": 1.0,
+      "f1": 1.0,
+      "url_retrieved": false,
+      "answer_in_chunks": true,
+      "error_type": null,
+      "retrieved_urls": [
+        "https://eecs.berkeley.edu/book/2019-2/faculty-3/listgarten",
+        "https://eecs.berkeley.edu/book/2019-2/faculty-3/listgarten",
+        "https://eecs.berkeley.edu/category/diversity",
+        "https://eecs.berkeley.edu/resources/undergrads/honors/members",
+        "https://eecs.berkeley.edu/category/honors/page/6"
+      ],
+      "llm_latency_s": 1.2604639530181885
+    },
+    {
+      "question": "When is the deadline for the nomination of the outstanding TA awards?",
+      "gold_answers": [
+        "2/18/26"
+      ],
+      "gold_url": "https://eecs.berkeley.edu/people/students-2/awards/",
+      "prediction": "2/18/26",
+      "raw_llm_response": "2/18/26",
+      "em": 1.0,
+      "f1": 1.0,
+      "url_retrieved": false,
+      "answer_in_chunks": true,
+      "error_type": null,
+      "retrieved_urls": [
+        "http://www.eecs.berkeley.edu/Students/Awards",
+        "https://eecs.berkeley.edu/people/students-2/awards",
+        "https://eecs.berkeley.edu/people/students/awards",
+        "https://eecs.berkeley.edu/people/students/awards",
+        "https://eecs.berkeley.edu/news/eecs-host-rising-stars-2020"
+      ],
+      "llm_latency_s": 0.3078439235687256
+    },
+    {
+      "question": "Which university did Pieter Abbeel do his masters degree from?",
+      "gold_answers": [
+        "KU Leuven"
+      ],
+      "gold_url": "https://www2.eecs.berkeley.edu/Faculty/Homepages/abbeel.html",
+      "prediction": "SUNY Buffalo",
+      "raw_llm_response": "SUNY Buffalo",
+      "em": 0.0,
+      "f1": 0.0,
+      "url_retrieved": true,
+      "answer_in_chunks": false,
+      "error_type": "retrieval_miss",
+      "retrieved_urls": [
+        "https://eecs.berkeley.edu/news/pieter-abbeel-interviewed-featured-acm-member",
+        "https://www2.eecs.berkeley.edu/Faculty/Homepages/abbeel.html",
+        "https://eecs.berkeley.edu/category/people/page/27",
+        "https://www2.eecs.berkeley.edu/Faculty/Homepages/rjfull.html",
+        "https://www2.eecs.berkeley.edu/Faculty/Homepages/abbeel.html"
+      ],
+      "llm_latency_s": 0.9811866283416748
+    },
+    {
+      "question": "Where did Dan Klein get his PhD?",
+      "gold_answers": [
+        "Stanford University"
+      ],
+      "gold_url": "https://eecs.berkeley.edu/book/faculty/",
+      "prediction": "Stanford University",
+      "raw_llm_response": "Stanford University",
+      "em": 1.0,
+      "f1": 1.0,
+      "url_retrieved": false,
+      "answer_in_chunks": true,
+      "error_type": null,
+      "retrieved_urls": [
+        "https://eecs.berkeley.edu/news/dan-klein-and-angjoo-kanazawa-win-2022-bakar-fellows-spark-awards",
+        "https://www2.eecs.berkeley.edu/Faculty/Homepages/klein.html",
+        "https://eecs.berkeley.edu/news/dan-garcias-creative-video-lessons-keep-students-engaged",
+        "https://www2.eecs.berkeley.edu/Faculty/Lists/list.html",
+        "https://eecs.berkeley.edu/news/jessy-lin-and-abhishek-shetty-win-2023-apple-scholars-aiml-phd-fellowships"
+      ],
+      "llm_latency_s": 1.0182101726531982
+    },
+    {
+      "question": "How many EE courses is Kristofer Pister teaching in Spring 2027?",
+      "gold_answers": [
+        "6"
+      ],
+      "gold_url": "https://www2.eecs.berkeley.edu/Scheduling/EE/schedule-draft.html",
+      "prediction": "None",
+      "raw_llm_response": "None.",
+      "em": 0.0,
+      "f1": 0.0,
+      "url_retrieved": true,
+      "answer_in_chunks": true,
+      "error_type": "generation_miss",
+      "retrieved_urls": [
+        "https://www2.eecs.berkeley.edu/Scheduling/EE/schedule-draft.html",
+        "https://www2.eecs.berkeley.edu/Faculty/Lists/list.html",
+        "https://eecs.berkeley.edu/academics/courses",
+        "https://www2.eecs.berkeley.edu/Faculty/Lists/faculty.html",
+        "https://eecs.berkeley.edu/news/novel-agriculture-tech-platform-developed-ana-arias-and-kristofer-pister-featured"
+      ],
+      "llm_latency_s": 0.2281196117401123
+    },
+    {
+      "question": "How many minor credits do PhD students have to take?",
+      "gold_answers": [
+        "6+"
+      ],
+      "gold_url": "https://eecs.berkeley.edu/book/phd/coursework/",
+      "prediction": "There is no information about minor credits for PhD students in the provided context",
+      "raw_llm_response": "There is no information about minor credits for PhD students in the provided context.",
+      "em": 0.0,
+      "f1": 0.0,
+      "url_retrieved": false,
+      "answer_in_chunks": false,
+      "error_type": "retrieval_miss",
+      "retrieved_urls": [
+        "https://eecs.berkeley.edu/resources/undergrads/cs/minor",
+        "https://eecs.berkeley.edu/resources/undergrads/cs/minor",
+        "https://eecs.berkeley.edu/resources/undergrads/minors/eis",
+        "https://eecs.berkeley.edu/resources/undergrads/faculty-advising/faq-5",
+        "https://eecs.berkeley.edu/book/phd/coursework"
+      ],
+      "llm_latency_s": 0.326038122177124
+    }
+  ]
+}
