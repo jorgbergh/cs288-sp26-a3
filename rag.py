@@ -44,7 +44,7 @@ DATASTORE_DIR = os.path.join(SCRIPT_DIR, "datastore")
 
 BM25_TOP_K = 20
 DENSE_TOP_K = 20
-FINAL_TOP_K = 5
+FINAL_TOP_K = 7
 RRF_K = 60  # Reciprocal Rank Fusion constant
 
 LLM_MODEL = "meta-llama/llama-3.1-8b-instruct"
@@ -60,6 +60,8 @@ SYSTEM_PROMPT = (
     "(1-10 words). Extract the answer verbatim from the context when possible. "
     "Output ONLY the answer, nothing else. No explanations, no full sentences."
 )
+
+BGE_QUERY_PREFIX = "Represent this sentence for searching relevant passages: "
 
 TOKENIZE_RE = re.compile(r"[a-zA-Z0-9]+")
 
@@ -96,8 +98,8 @@ class RAGSystem:
         if os.path.exists(model_path):
             self.embed_model = SentenceTransformer(model_path)
         else:
-            print("  Local model not found, downloading all-MiniLM-L6-v2...", file=sys.stderr)
-            self.embed_model = SentenceTransformer("sentence-transformers/all-MiniLM-L6-v2")
+            print("  Local model not found, downloading BAAI/bge-small-en-v1.5...", file=sys.stderr)
+            self.embed_model = SentenceTransformer("BAAI/bge-small-en-v1.5")
             self.embed_model.save(model_path)
 
         elapsed = time.time() - t0
@@ -112,8 +114,9 @@ class RAGSystem:
 
     def retrieve_dense(self, query: str, top_k: int = DENSE_TOP_K) -> list:
         """Retrieve top-k chunks using dense (FAISS) retrieval."""
+        query_with_prefix = BGE_QUERY_PREFIX + query
         query_vec = self.embed_model.encode(
-            [query], normalize_embeddings=True
+            [query_with_prefix], normalize_embeddings=True
         ).astype(np.float32)
         scores, indices = self.faiss_index.search(query_vec, top_k)
         return [(int(indices[0][i]), float(scores[0][i]))
