@@ -23,26 +23,26 @@ OPENROUTER_API_KEY=your_key_here
 ## Architecture
 
 ```
-┌─────────────────────────── Offline ────────────────────────────────┐
-│                                                                    │
-│  corpus.jsonl ──▶ Clean & Chunk ──┬──▶ BM25 Index ──┐              │
-│                    (~500 chars)   │                 ├──▶ datastore/│
-│                                   └──▶ MiniLM ──▶ FAISS Index ──┘  │
-└────────────────────────────────────────────────────────────────────┘
+┌────────────────────────────── Offline ──────────────────────────────┐
+│                                                                     │
+│  corpus.jsonl ──▶ Clean & Chunk ──┬──▶ BM25 Index ──┐               │
+│                    (~500 chars)   │                 ├──▶ datastore/ │
+│                                   └──▶ MiniLM ──▶ FAISS Index ──┘   │
+└─────────────────────────────────────────────────────────────────────┘
 
-┌─────────────────────────── Online ─────────────────────────────────┐
-│                                                                    │
-│  Question ──▶ LLM Query Expansion (3 phrasings)                    │
-│                 │                                                  │
-│                 ├──▶ BM25  (top 20 per query) ──┐                  │
-│                 │                               ├──▶ RRF (top 20)  │
-│                 └──▶ FAISS (top 20 per query) ──┘       │          │
-│                                                         │          │
-│                                          Cross-Encoder Rerank      │
-│                                                (top 5)             │
-│                                                  │                 │
-│                                                 LLM ──▶ Answer     │
-└────────────────────────────────────────────────────────────────────┘
+┌────────────────────────────── Online ───────────────────────────────┐
+│                                                                     │
+│  Question ──▶ LLM Query Expansion (3 phrasings)                     │
+│                 │                                                   │
+│                 ├──▶ BM25  (top 20 per query) ──┐                   │
+│                 │                               ├──▶ RRF (top 20)   │
+│                 └──▶ FAISS (top 20 per query) ──┘       │           │
+│                                                         │           │
+│                                          Cross-Encoder Rerank       │
+│                                                (top 5)              │
+│                                                  │                  │
+│                                                 LLM ──▶ Answer      │
+└─────────────────────────────────────────────────────────────────────┘
 ```
 
 ---
