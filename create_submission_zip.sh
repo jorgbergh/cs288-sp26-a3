@@ -15,11 +15,9 @@ zip -r "$ZIP_NAME" \
     run.sh \
     rag.py \
     llm.py \
-    datastore/chunks.json \
-    datastore/bm25_index.pkl \
-    datastore/faiss_index.bin \
     qa_dataset.jsonl \
     iaa_results.json
+    # datastore files are downloaded at runtime from Git LFS
 
 echo ""
 echo "Created $ZIP_NAME ($(du -h "$ZIP_NAME" | cut -f1))"

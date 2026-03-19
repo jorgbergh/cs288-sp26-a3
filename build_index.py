@@ -19,9 +19,9 @@ from tqdm import tqdm
 
 CORPUS_FILE = "corpus.jsonl"
 DATASTORE_DIR = "datastore"
-EMBEDDING_MODEL_NAME = "BAAI/bge-small-en-v1.5"
-CHUNK_SIZE = 500
-CHUNK_OVERLAP = 100
+EMBEDDING_MODEL_NAME = "BAAI/bge-base-en-v1.5"      #BAAI/bge-small-en-v1.5 or BAAI/bge-base-en-v1.5
+CHUNK_SIZE = 800
+CHUNK_OVERLAP = 150
 
 
 # ---------------------------------------------------------------------------
@@ -144,10 +144,14 @@ def main():
     # --- Load corpus ---
     print("Loading corpus...", file=sys.stderr)
     docs = []
+    seen_urls = set()
     with open(CORPUS_FILE) as f:
         for line in f:
-            docs.append(json.loads(line.strip()))
-    print(f"  Loaded {len(docs)} documents", file=sys.stderr)
+            doc = json.loads(line.strip())
+            if doc["url"] not in seen_urls:
+                seen_urls.add(doc["url"])
+                docs.append(doc)
+    print(f"  Loaded {len(docs)} documents (after dedup)", file=sys.stderr)
 
     # --- Clean and chunk ---
     print("Cleaning and chunking...", file=sys.stderr)
@@ -159,10 +163,11 @@ def main():
 
         doc_chunks = chunk_text(cleaned)
         for chunk_text_str in doc_chunks:
+            titled_text = f"[Page: {doc.get('title', '')}]\n{chunk_text_str}" if doc.get('title') else chunk_text_str
             chunks.append({
                 "url": doc["url"],
                 "title": doc.get("title", ""),
-                "text": chunk_text_str,
+                "text": titled_text,
             })
 
     print(f"  Total chunks: {len(chunks)}", file=sys.stderr)
@@ -189,16 +194,21 @@ def main():
 
     # Save model locally for offline use on Gradescope
     model_save_path = os.path.join(DATASTORE_DIR, "embedding_model")
-    model.save(model_save_path)
-    print(f"  Saved embedding model to {model_save_path}", file=sys.stderr)
+    if os.path.exists(model_save_path):
+        model = SentenceTransformer(model_save_path)
+        print(f"  Loaded embedding model from {model_save_path}", file=sys.stderr)
+    else:
+        model = SentenceTransformer(EMBEDDING_MODEL_NAME)
+        model.save(model_save_path)
+        print(f"  Saved embedding model to {model_save_path}", file=sys.stderr)
 
     print("Encoding chunks...", file=sys.stderr)
     chunk_texts = [c["text"] for c in chunks]
     embeddings = model.encode(
         chunk_texts,
-        batch_size=64,
+        batch_size=90,
         show_progress_bar=True,
-        normalize_embeddings=True,
+        normalize_embeddings=True
     )
     embeddings = embeddings.astype(np.float32)
 

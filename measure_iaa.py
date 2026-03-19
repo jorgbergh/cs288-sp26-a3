@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """
 Measure Inter-Annotator Agreement (IAA) on the QA dataset.
-Uses two different LLMs as independent annotators on a 35% subset.
+Uses two different LLMs as independent annotators on a min(10, 35%) subset.
 """
 
 import json
@@ -96,7 +96,7 @@ def load_corpus_by_url():
 
 def answer_question(question, context, model):
     """Have a model answer a question given context."""
-    system = "Answer the question using ONLY the provided context. Give a short answer (1-10 words). Output ONLY the answer, nothing else."
+    system = "Answer the question using ONLY the provided context. Give a short answer (1-5 words). Answer concisely. Output ONLY the answer, nothing else."
     prompt = f"Context:\n{context[:3000]}\n\nQuestion: {question}\n\nAnswer:"
 
     try:
@@ -114,6 +114,11 @@ def answer_question(question, context, model):
 
 
 def main():
+    import argparse
+    parser = argparse.ArgumentParser()
+    parser.add_argument("--qafile", default=QA_FILE, help="Path to QA dataset JSONL file")
+    args = parser.parse_args()
+
     random.seed(42)
 
     if not os.environ.get("OPENROUTER_API_KEY"):
@@ -122,7 +127,7 @@ def main():
 
     print("Loading QA dataset...", file=sys.stderr)
     qa_pairs = []
-    with open(QA_FILE) as f:
+    with open(args.qafile) as f:
         for line in f:
             qa_pairs.append(json.loads(line.strip()))
     print(f"  Total QA pairs: {len(qa_pairs)}", file=sys.stderr)
@@ -130,8 +135,13 @@ def main():
     print("Loading corpus...", file=sys.stderr)
     url_to_text = load_corpus_by_url()
 
-    subset_size = max(30, int(len(qa_pairs) * IAA_FRACTION))
-    subset = random.sample(qa_pairs, min(subset_size, len(qa_pairs)))
+    # Filter to only QA pairs that have matching corpus context before sampling
+    qa_with_context = [qa for qa in qa_pairs if url_to_text.get(qa["url"], "")]
+    print(f"  QA pairs with corpus context: {len(qa_with_context)}/{len(qa_pairs)}", file=sys.stderr)
+
+    subset_size = max(10, int(len(qa_with_context) * IAA_FRACTION))
+    subset_size = max(1, subset_size)  # ensure at least 1
+    subset = random.sample(qa_with_context, min(subset_size, len(qa_with_context)))
     print(f"  IAA subset size: {len(subset)} ({100*len(subset)/len(qa_pairs):.0f}%)", file=sys.stderr)
 
     results = []

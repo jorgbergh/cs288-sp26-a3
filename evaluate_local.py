@@ -147,6 +147,8 @@ def main():
         datasets.append("reference.jsonl")
     if os.path.exists("qa_dataset.jsonl"):
         datasets.append("qa_dataset.jsonl")
+    if os.path.exists("qa_dataset_byhand.jsonl"):
+        datasets.append("qa_dataset_byhand.jsonl")
 
     if not datasets:
         print("No evaluation datasets found", file=sys.stderr)

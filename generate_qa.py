@@ -27,7 +27,7 @@ load_dotenv()
 from llm import call_llm
 
 CORPUS_FILE = "corpus.jsonl"
-OUTPUT_FILE = "qa_dataset.jsonl"
+OUTPUT_FILE = "qa_dataset_LLM.jsonl"
 TARGET_QA_PAIRS = 150
 
 TOPIC_CATEGORIES = {

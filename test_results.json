@@ -1,239 +1,422 @@
 {
-  "dataset": "reference.jsonl",
+  "dataset": "qa_dataset_byhand.jsonl",
   "summary": {
-    "n": 10,
-    "exact_match": 0.5,
-    "f1": 0.55,
-    "retrieval_url_recall": 0.2,
-    "retrieval_answer_recall": 0.7,
-    "total_errors": 4,
-    "retrieval_misses": 3,
+    "n": 11,
+    "exact_match": 0.9090909090909091,
+    "f1": 0.9090909090909091,
+    "retrieval_url_recall": 0.0,
+    "retrieval_answer_recall": 1.0,
+    "total_errors": 1,
+    "retrieval_misses": 0,
     "generation_misses": 1
   },
   "per_question": [
     {
-      "question": "What is the course number for the undergrad-level class that covers computer security topics such as cryptography, operating system security, network security, and software security?",
+      "question": "Who is the chair of the Department of Electrical Engineering and Computer Sciences?",
       "gold_answers": [
-        "CS 161"
+        "Jelani Nelson"
       ],
-      "gold_url": "https://www2.eecs.berkeley.edu/Courses/CS/",
-      "prediction": "CS 161",
-      "raw_llm_response": "CS 161.",
-      "em": 1.0,
-      "f1": 1.0,
-      "url_retrieved": false,
-      "answer_in_chunks": true,
-      "error_type": null,
-      "retrieved_urls": [
-        "https://www2.eecs.berkeley.edu/Courses/EE",
-        "https://www2.eecs.berkeley.edu/Courses/CS",
-        "https://www2.eecs.berkeley.edu/Courses/CS",
-        "https://www2.eecs.berkeley.edu/Courses/EE",
-        "https://www2.eecs.berkeley.edu/Courses/CS"
-      ],
-      "llm_latency_s": 0.7600970268249512
-    },
-    {
-      "question": "Who is the CS student advisor?",
-      "gold_answers": [
-        "Gina Garcia",
-        "Floriberto Garcia",
-        "Grayson Johnston",
-        "Carol Marshall"
-      ],
-      "gold_url": "https://eecs.berkeley.edu/resources/undergrads/cs/advising/",
-      "prediction": "Gina Garcia, Floriberto Garcia, Grayson Johnston",
-      "raw_llm_response": "Gina Garcia, Floriberto Garcia, Grayson Johnston.",
-      "em": 0.0,
-      "f1": 0.5,
-      "url_retrieved": false,
-      "answer_in_chunks": true,
-      "error_type": null,
-      "retrieved_urls": [
-        "https://eecs.berkeley.edu/resources/undergrads/cs/advising",
-        "https://eecs.berkeley.edu/category/diversity",
-        "https://eecs.berkeley.edu/resources/undergrads/cs/advising",
-        "https://eecs.berkeley.edu/resources/grads/advisors",
-        "http://www.eecs.berkeley.edu/Students/Staff/grads-ee@berkeley.edu"
-      ],
-      "llm_latency_s": 0.45350193977355957
-    },
-    {
-      "question": "Which EECS graduate student was awarded a 2025 Paul & Daisy Soros Fellowship for New Americans?",
-      "gold_answers": [
-        "Syed Tahmid Mahbub"
-      ],
-      "gold_url": "https://eecs.berkeley.edu/news/graduate-student-syed-tahmid-mahbub-awarded-paul-daisy-soros-fellowship/",
-      "prediction": "Syed Tahmid Mahbub",
-      "raw_llm_response": "Syed Tahmid Mahbub.",
-      "em": 1.0,
-      "f1": 1.0,
-      "url_retrieved": false,
-      "answer_in_chunks": true,
-      "error_type": null,
-      "retrieved_urls": [
-        "https://eecs.berkeley.edu/news/graduate-student-syed-tahmid-mahbub-awarded-paul-daisy-soros-fellowship",
-        "https://eecs.berkeley.edu/news/page/7",
-        "https://eecs.berkeley.edu/news/dave-epstein-wins-2022-paul-daisy-soros-fellowship",
-        "https://eecs.berkeley.edu/category/research/page/20",
-        "https://eecs.berkeley.edu/category/people/students/page/8"
-      ],
-      "llm_latency_s": 0.9943022727966309
-    },
-    {
-      "question": "Who was the earliest-born professor at UC Berkeley?",
-      "gold_answers": [
-        "Lester Edwin Reukema"
-      ],
-      "gold_url": "https://eecs.berkeley.edu/people/faculty/in-memoriam/",
-      "prediction": "Joseph Thomas Gier",
-      "raw_llm_response": "Joseph Thomas Gier",
+      "gold_url": "http://www.eecs.berkeley.edu/about/",
+      "prediction": "Ana Claudia Arias",
+      "raw_llm_response": "Ana Claudia Arias",
       "em": 0.0,
       "f1": 0.0,
       "url_retrieved": false,
-      "answer_in_chunks": false,
-      "error_type": "retrieval_miss",
-      "retrieved_urls": [
-        "https://eecs.berkeley.edu/2019/03/a-salute-to-early-women-in-stem-at-uc-berkeley",
-        "https://eecs.berkeley.edu/2020/09/wicse-history",
-        "https://eecs.berkeley.edu/book/2021-2/alumni/merkle",
-        "https://eecs.berkeley.edu/2019/02/joseph-gier",
-        "https://eecs.berkeley.edu/category/people/page/33"
-      ],
-      "llm_latency_s": 0.25312209129333496
-    },
-    {
-      "question": "Who is the advisor of the student whose 2024 thesis is about protein evolution?",
-      "gold_answers": [
-        "Moritz Hardt",
-        "Jennifer Listgarten"
-      ],
-      "gold_url": "https://www2.eecs.berkeley.edu/Pubs/TechRpts/2024/EECS-2024-27.pdf",
-      "prediction": "Jennifer Listgarten",
-      "raw_llm_response": "Jennifer Listgarten",
-      "em": 1.0,
-      "f1": 1.0,
-      "url_retrieved": false,
-      "answer_in_chunks": true,
-      "error_type": null,
-      "retrieved_urls": [
-        "https://eecs.berkeley.edu/book/2019-2/faculty-3/listgarten",
-        "https://eecs.berkeley.edu/book/2019-2/faculty-3/listgarten",
-        "https://eecs.berkeley.edu/category/diversity",
-        "https://eecs.berkeley.edu/resources/undergrads/honors/members",
-        "https://eecs.berkeley.edu/category/honors/page/6"
-      ],
-      "llm_latency_s": 1.2604639530181885
-    },
-    {
-      "question": "When is the deadline for the nomination of the outstanding TA awards?",
-      "gold_answers": [
-        "2/18/26"
-      ],
-      "gold_url": "https://eecs.berkeley.edu/people/students-2/awards/",
-      "prediction": "2/18/26",
-      "raw_llm_response": "2/18/26",
-      "em": 1.0,
-      "f1": 1.0,
-      "url_retrieved": false,
-      "answer_in_chunks": true,
-      "error_type": null,
-      "retrieved_urls": [
-        "http://www.eecs.berkeley.edu/Students/Awards",
-        "https://eecs.berkeley.edu/people/students-2/awards",
-        "https://eecs.berkeley.edu/people/students/awards",
-        "https://eecs.berkeley.edu/people/students/awards",
-        "https://eecs.berkeley.edu/news/eecs-host-rising-stars-2020"
-      ],
-      "llm_latency_s": 0.3078439235687256
-    },
-    {
-      "question": "Which university did Pieter Abbeel do his masters degree from?",
-      "gold_answers": [
-        "KU Leuven"
-      ],
-      "gold_url": "https://www2.eecs.berkeley.edu/Faculty/Homepages/abbeel.html",
-      "prediction": "SUNY Buffalo",
-      "raw_llm_response": "SUNY Buffalo",
-      "em": 0.0,
-      "f1": 0.0,
-      "url_retrieved": true,
-      "answer_in_chunks": false,
-      "error_type": "retrieval_miss",
-      "retrieved_urls": [
-        "https://eecs.berkeley.edu/news/pieter-abbeel-interviewed-featured-acm-member",
-        "https://www2.eecs.berkeley.edu/Faculty/Homepages/abbeel.html",
-        "https://eecs.berkeley.edu/category/people/page/27",
-        "https://www2.eecs.berkeley.edu/Faculty/Homepages/rjfull.html",
-        "https://www2.eecs.berkeley.edu/Faculty/Homepages/abbeel.html"
-      ],
-      "llm_latency_s": 0.9811866283416748
-    },
-    {
-      "question": "Where did Dan Klein get his PhD?",
-      "gold_answers": [
-        "Stanford University"
-      ],
-      "gold_url": "https://eecs.berkeley.edu/book/faculty/",
-      "prediction": "Stanford University",
-      "raw_llm_response": "Stanford University",
-      "em": 1.0,
-      "f1": 1.0,
-      "url_retrieved": false,
-      "answer_in_chunks": true,
-      "error_type": null,
-      "retrieved_urls": [
-        "https://eecs.berkeley.edu/news/dan-klein-and-angjoo-kanazawa-win-2022-bakar-fellows-spark-awards",
-        "https://www2.eecs.berkeley.edu/Faculty/Homepages/klein.html",
-        "https://eecs.berkeley.edu/news/dan-garcias-creative-video-lessons-keep-students-engaged",
-        "https://www2.eecs.berkeley.edu/Faculty/Lists/list.html",
-        "https://eecs.berkeley.edu/news/jessy-lin-and-abhishek-shetty-win-2023-apple-scholars-aiml-phd-fellowships"
-      ],
-      "llm_latency_s": 1.0182101726531982
-    },
-    {
-      "question": "How many EE courses is Kristofer Pister teaching in Spring 2027?",
-      "gold_answers": [
-        "6"
-      ],
-      "gold_url": "https://www2.eecs.berkeley.edu/Scheduling/EE/schedule-draft.html",
-      "prediction": "None",
-      "raw_llm_response": "None.",
-      "em": 0.0,
-      "f1": 0.0,
-      "url_retrieved": true,
       "answer_in_chunks": true,
       "error_type": "generation_miss",
       "retrieved_urls": [
-        "https://www2.eecs.berkeley.edu/Scheduling/EE/schedule-draft.html",
-        "https://www2.eecs.berkeley.edu/Faculty/Lists/list.html",
-        "https://eecs.berkeley.edu/academics/courses",
+        "https://eecs.berkeley.edu/about",
+        "http://eecs.berkeley.edu/2024/05/the-2024-eecs-distinguished-alumni",
+        "http://eecs.berkeley.edu/2024/05/the-2024-eecs-distinguished-alumni",
+        "https://www2.eecs.berkeley.edu/Faculty/Homepages/ctnguyen.html",
+        "https://eecs.berkeley.edu/",
+        "https://www2.eecs.berkeley.edu/Faculty/Homepages/sastry.html",
+        "https://eecs.berkeley.edu/blog",
+        "https://eecs.berkeley.edu/research/colloquium/170927-2",
         "https://www2.eecs.berkeley.edu/Faculty/Lists/faculty.html",
-        "https://eecs.berkeley.edu/news/novel-agriculture-tech-platform-developed-ana-arias-and-kristofer-pister-featured"
+        "https://www2.eecs.berkeley.edu/Faculty/Lists/list.html",
+        "https://www2.eecs.berkeley.edu/Faculty/Homepages/spanos.html",
+        "https://eecs.berkeley.edu/zadeh-symposium-2018",
+        "https://www2.eecs.berkeley.edu/Faculty/Homepages/newton.html",
+        "https://www2.eecs.berkeley.edu/Faculty/Homepages/skarandikar.html",
+        "https://www2.eecs.berkeley.edu/Faculty/Homepages/sanders.html",
+        "https://eecs.berkeley.edu/book/2018-2/faculty-2",
+        "https://eecs.berkeley.edu/about/history/first-women",
+        "https://www2.eecs.berkeley.edu/Faculty/Homepages/newton.html",
+        "https://www2.eecs.berkeley.edu/Faculty/Homepages/katz.html",
+        "https://eecs.berkeley.edu/research/colloquium/archives/20230913-2"
       ],
-      "llm_latency_s": 0.2281196117401123
+      "llm_latency_s": 0.4692049026489258
     },
     {
-      "question": "How many minor credits do PhD students have to take?",
+      "question": "What does EECS stand for?",
       "gold_answers": [
-        "6+"
+        "Electrical Engineering and Computer Sciences"
       ],
-      "gold_url": "https://eecs.berkeley.edu/book/phd/coursework/",
-      "prediction": "There is no information about minor credits for PhD students in the provided context",
-      "raw_llm_response": "There is no information about minor credits for PhD students in the provided context.",
-      "em": 0.0,
-      "f1": 0.0,
+      "gold_url": "https://eecs.berkeley.edu/academics/undergraduate/compare-majors",
+      "prediction": "Electrical Engineering and Computer Sciences",
+      "raw_llm_response": "Electrical Engineering and Computer Sciences",
+      "em": 1.0,
+      "f1": 1.0,
       "url_retrieved": false,
-      "answer_in_chunks": false,
-      "error_type": "retrieval_miss",
+      "answer_in_chunks": true,
+      "error_type": null,
       "retrieved_urls": [
-        "https://eecs.berkeley.edu/resources/undergrads/cs/minor",
-        "https://eecs.berkeley.edu/resources/undergrads/cs/minor",
-        "https://eecs.berkeley.edu/resources/undergrads/minors/eis",
+        "https://eecs.berkeley.edu/people/staff/awards-2/zeilinger",
+        "https://eecs.berkeley.edu/connect/support",
+        "https://eecs.berkeley.edu/resources/faculty-staff/grad-review/skills",
+        "https://eecs.berkeley.edu/connect/faculty-jobs",
+        "https://eecs.berkeley.edu/resources/faculty-staff/grad-review/skills",
+        "https://eecs.berkeley.edu/academics/undergraduate/eecs-bs/objectives-outcomes",
+        "https://eecs.berkeley.edu/academics/graduate/faq-3",
+        "https://www2.eecs.berkeley.edu/ACG",
+        "https://eecs.berkeley.edu/resources/ase/current/payroll/hourly-faq",
+        "https://www2.eecs.berkeley.edu/Students/Awards/113",
+        "https://eecs.berkeley.edu/resources/faculty-staff/grad-review/skills",
+        "https://eecs.berkeley.edu/industry",
+        "https://eecs.berkeley.edu/academics/graduate/faq-3",
+        "http://eecs.berkeley.edu/2024/05/the-2024-eecs-distinguished-alumni",
         "https://eecs.berkeley.edu/resources/undergrads/faculty-advising/faq-5",
-        "https://eecs.berkeley.edu/book/phd/coursework"
+        "https://eecs.berkeley.edu/academics/undergraduate/eecs-bs",
+        "https://eecs.berkeley.edu/research/colloquium/210310-2",
+        "https://www2.eecs.berkeley.edu/Students/Awards",
+        "https://eecs.berkeley.edu/academics/graduate/faq-3",
+        "https://eecs.berkeley.edu/resources/csa"
       ],
-      "llm_latency_s": 0.326038122177124
+      "llm_latency_s": 1.1742610931396484
+    },
+    {
+      "question": "Who is the EE division chair?",
+      "gold_answers": [
+        "Ana Claudia Arias"
+      ],
+      "gold_url": "http://www.eecs.berkeley.edu/people/leadership/",
+      "prediction": "Ana Claudia Arias",
+      "raw_llm_response": "Ana Claudia Arias",
+      "em": 1.0,
+      "f1": 1.0,
+      "url_retrieved": false,
+      "answer_in_chunks": true,
+      "error_type": null,
+      "retrieved_urls": [
+        "https://eecs.berkeley.edu/people/leadership",
+        "https://eecs.berkeley.edu/about",
+        "https://eecs.berkeley.edu/about/special-events/2023-24",
+        "https://eecs.berkeley.edu/people/leadership",
+        "https://eecs.berkeley.edu/about/history/first-women",
+        "https://www2.eecs.berkeley.edu/Faculty/Homepages/patterson.html",
+        "https://eecs.berkeley.edu/resources/students/cpt",
+        "https://www2.eecs.berkeley.edu/bears/2013",
+        "https://eecs.berkeley.edu/research/colloquium/archives/fall2024/mixed-autonomy-traffic-at-scale",
+        "https://eecs.berkeley.edu/people/students-2/awards",
+        "https://eecs.berkeley.edu/about/diversity/hopper-dean",
+        "https://eecs.berkeley.edu/book/2018-2/faculty-2",
+        "https://eecs.berkeley.edu/research/colloquium/170927-2",
+        "https://eecs.berkeley.edu/people/alumni/ee-distinguished-alumni",
+        "https://www2.eecs.berkeley.edu/Faculty/Homepages/oldham.html",
+        "https://eecs.berkeley.edu/book/2018-2/faculty-2",
+        "https://eecs.berkeley.edu/research/colloquium/170927-2",
+        "https://eecs.berkeley.edu/people/leadership",
+        "https://www2.eecs.berkeley.edu/Faculty/Homepages/lee.html",
+        "https://www2.eecs.berkeley.edu/bears/2016"
+      ],
+      "llm_latency_s": 0.9614901542663574
+    },
+    {
+      "question": "Who is the CS division chair?",
+      "gold_answers": [
+        "John Wawrzynek"
+      ],
+      "gold_url": "http://www.eecs.berkeley.edu/people/leadership/",
+      "prediction": "John Wawrzynek",
+      "raw_llm_response": "John Wawrzynek",
+      "em": 1.0,
+      "f1": 1.0,
+      "url_retrieved": false,
+      "answer_in_chunks": true,
+      "error_type": null,
+      "retrieved_urls": [
+        "https://eecs.berkeley.edu/people/leadership",
+        "https://eecs.berkeley.edu/about",
+        "https://eecs.berkeley.edu/people/leadership",
+        "http://eecs.berkeley.edu/2019/11/hopper-dean-gift",
+        "https://eecs.berkeley.edu/about/special-events/2023-24",
+        "http://eecs.berkeley.edu/2019/11/hopper-dean-gift",
+        "https://eecs.berkeley.edu/about/diversity/hopper-dean",
+        "https://www2.eecs.berkeley.edu/Faculty/Homepages/patterson.html",
+        "https://eecs.berkeley.edu/book/2018-2/faculty-2",
+        "https://eecs.berkeley.edu/about/diversity/hopper-dean",
+        "https://eecs.berkeley.edu/resources/undergrads/eecs-2/junior-transfers",
+        "https://eecs.berkeley.edu/resources/facilities/soda-space-allocation",
+        "https://eecs.berkeley.edu/resources/facilities/soda-policies",
+        "https://www2.eecs.berkeley.edu/Faculty/Homepages/garcia.html",
+        "https://eecs.berkeley.edu/about/diversity/milestones",
+        "https://www2.eecs.berkeley.edu/Students/Awards/nominations.html",
+        "https://www2.eecs.berkeley.edu/bears/2013",
+        "https://eecs.berkeley.edu/resources/undergrads/cs/minor",
+        "https://eecs.berkeley.edu/cs",
+        "https://eecs.berkeley.edu/research/colloquium/170315-2"
+      ],
+      "llm_latency_s": 0.9082350730895996
+    },
+    {
+      "question": "What year did Dawn Song become a MacArthur fellow?",
+      "gold_answers": [
+        "2010"
+      ],
+      "gold_url": "https://www2.eecs.berkeley.edu/Research/Areas/AI/",
+      "prediction": "2010",
+      "raw_llm_response": "2010",
+      "em": 1.0,
+      "f1": 1.0,
+      "url_retrieved": false,
+      "answer_in_chunks": true,
+      "error_type": null,
+      "retrieved_urls": [
+        "https://www2.eecs.berkeley.edu/Research/Areas/PS",
+        "https://www2.eecs.berkeley.edu/Faculty/Homepages/song.html",
+        "https://www2.eecs.berkeley.edu/Faculty/Awards/government.html",
+        "https://www2.eecs.berkeley.edu/Research/Areas/SEC",
+        "https://www2.eecs.berkeley.edu/Pubs/Theses",
+        "https://www2.eecs.berkeley.edu/Research/Areas/PS",
+        "https://www2.eecs.berkeley.edu/Faculty/Awards/index.html",
+        "https://www2.eecs.berkeley.edu/Faculty/Awards",
+        "https://www2.eecs.berkeley.edu/Faculty/Awards",
+        "https://www2.eecs.berkeley.edu/Faculty/Awards/index.html",
+        "https://www2.eecs.berkeley.edu/Faculty/Lists/list.html",
+        "https://www2.eecs.berkeley.edu/Faculty/Awards/government.html",
+        "https://www2.eecs.berkeley.edu/Faculty/Lists/CS/faculty.html",
+        "https://www2.eecs.berkeley.edu/Faculty/Awards/acm.html",
+        "https://www2.eecs.berkeley.edu/Faculty/Awards/index.html",
+        "https://www2.eecs.berkeley.edu/Courses/EE",
+        "https://www2.eecs.berkeley.edu/Faculty/Awards",
+        "https://eecs.berkeley.edu/resources/undergrads/cs/how-to-declare-cs",
+        "https://www2.eecs.berkeley.edu/Faculty/Homepages/culler.html",
+        "https://eecs.berkeley.edu/resources/faculty-staff/ieee-acm-awards"
+      ],
+      "llm_latency_s": 0.8253078460693359
+    },
+    {
+      "question": "What is the minimum grade point average (GPA) required to apply for the EECS minor?",
+      "gold_answers": [
+        "2.0"
+      ],
+      "gold_url": "https://eecs.berkeley.edu/resources/undergrads/minors/eecs/",
+      "prediction": "2.0",
+      "raw_llm_response": "2.0",
+      "em": 1.0,
+      "f1": 1.0,
+      "url_retrieved": false,
+      "answer_in_chunks": true,
+      "error_type": null,
+      "retrieved_urls": [
+        "https://eecs.berkeley.edu/resources/undergrads/minors/eecs",
+        "https://eecs.berkeley.edu/book/phd/coursework",
+        "https://eecs.berkeley.edu/book/ms",
+        "https://eecs.berkeley.edu/resources/undergrads/minors",
+        "https://eecs.berkeley.edu/resources/undergrads/cs/minor",
+        "https://eecs.berkeley.edu/academics/graduate/industry-programs/5yrms/degree-requirements",
+        "https://eecs.berkeley.edu/resources/undergrads/cs/minor",
+        "https://eecs.berkeley.edu/academics/graduate/industry-programs/5yrms",
+        "https://eecs.berkeley.edu/academics/graduate/research-programs/admissions",
+        "https://eecs.berkeley.edu/resources/undergrads/minors/eis",
+        "https://eecs.berkeley.edu/academics/graduate/recommended-coursework",
+        "https://eecs.berkeley.edu/resources/undergrads/cs/minor",
+        "https://eecs.berkeley.edu/resources/undergrads/minors/eecs",
+        "https://eecs.berkeley.edu/academics/undergraduate/eecs-bs/4-year-transfers",
+        "https://eecs.berkeley.edu/resources/undergrads/undergraduate-research/superb",
+        "https://eecs.berkeley.edu/resources/undergrads/cs/how-to-declare-cs",
+        "https://eecs.berkeley.edu/academics/graduate/industry-programs/5yrms/faq-2",
+        "https://eecs.berkeley.edu/academics/undergraduate/eecs-bs/community-coll-transfers",
+        "https://eecs.berkeley.edu/resources/undergrads/minors/eis",
+        "https://eecs.berkeley.edu/academics/graduate/industry-programs/5yrms/degree-requirements"
+      ],
+      "llm_latency_s": 0.9381356239318848
+    },
+    {
+      "question": "What is the course number for the undergrad-level class that covers machine learning topics such as supervised methods for regression and classication, and density estimation and clustering?",
+      "gold_answers": [
+        "CS 189"
+      ],
+      "gold_url": "https://www2.eecs.berkeley.edu/Courses/CS/",
+      "prediction": "CS 189",
+      "raw_llm_response": "CS 189",
+      "em": 1.0,
+      "f1": 1.0,
+      "url_retrieved": false,
+      "answer_in_chunks": true,
+      "error_type": null,
+      "retrieved_urls": [
+        "https://www2.eecs.berkeley.edu/Courses/CS",
+        "https://www2.eecs.berkeley.edu/Courses/EE",
+        "https://www2.eecs.berkeley.edu/Courses/CS189",
+        "https://www2.eecs.berkeley.edu/Courses/EE",
+        "https://www2.eecs.berkeley.edu/Courses/CS",
+        "https://www2.eecs.berkeley.edu/Courses/CS",
+        "https://www2.eecs.berkeley.edu/Courses/EE",
+        "https://www2.eecs.berkeley.edu/Courses/CSC281A",
+        "https://www2.eecs.berkeley.edu/Courses/EE",
+        "https://www2.eecs.berkeley.edu/Courses/CS",
+        "https://www2.eecs.berkeley.edu/Courses/EE",
+        "https://www2.eecs.berkeley.edu/Courses/EE",
+        "https://www2.eecs.berkeley.edu/Courses/CS",
+        "https://www2.eecs.berkeley.edu/Courses/CS",
+        "https://www2.eecs.berkeley.edu/Courses/CS365",
+        "https://www2.eecs.berkeley.edu/Courses/EE",
+        "https://www2.eecs.berkeley.edu/Courses/CSC100",
+        "https://www2.eecs.berkeley.edu/Courses/CS",
+        "https://www2.eecs.berkeley.edu/bears/2015",
+        "https://www2.eecs.berkeley.edu/Courses/CS"
+      ],
+      "llm_latency_s": 0.6880130767822266
+    },
+    {
+      "question": "What is the course number for the graduate-level class that covers natural language processing topics such as recurrent networks and attention mechanisms, retrieval-augmented models, mixture-of-experts architectures, and AI agents?",
+      "gold_answers": [
+        "CS 288"
+      ],
+      "gold_url": "https://www2.eecs.berkeley.edu/Courses/CS/",
+      "prediction": "CS 288",
+      "raw_llm_response": "CS 288",
+      "em": 1.0,
+      "f1": 1.0,
+      "url_retrieved": false,
+      "answer_in_chunks": true,
+      "error_type": null,
+      "retrieved_urls": [
+        "https://www2.eecs.berkeley.edu/Courses/CS288",
+        "https://www2.eecs.berkeley.edu/Courses/EE",
+        "https://www2.eecs.berkeley.edu/Courses/CS",
+        "https://www2.eecs.berkeley.edu/Courses/CS288",
+        "https://www2.eecs.berkeley.edu/Courses/CS288",
+        "https://www2.eecs.berkeley.edu/Courses/EE",
+        "https://www2.eecs.berkeley.edu/Courses/CS",
+        "https://www2.eecs.berkeley.edu/Courses/EE",
+        "https://www2.eecs.berkeley.edu/Courses/EE",
+        "https://www2.eecs.berkeley.edu/Courses/EE",
+        "https://www2.eecs.berkeley.edu/Courses/EECS183",
+        "https://eecs.berkeley.edu/research/colloquium/171025-2",
+        "https://www2.eecs.berkeley.edu/Faculty/Homepages/suhr.html",
+        "https://www2.eecs.berkeley.edu/Courses/EECS151",
+        "https://www2.eecs.berkeley.edu/Faculty/Homepages/sewonmin.html",
+        "https://www2.eecs.berkeley.edu/Courses/CS365",
+        "https://www2.eecs.berkeley.edu/Research/Areas/Centers",
+        "https://www2.eecs.berkeley.edu/Courses/CS285",
+        "https://www2.eecs.berkeley.edu/Faculty/Homepages/gopala.html",
+        "https://www2.eecs.berkeley.edu/Courses/CS"
+      ],
+      "llm_latency_s": 0.554318904876709
+    },
+    {
+      "question": "Where did James Demmel get his B.S. degree?",
+      "gold_answers": [
+        "Caltech"
+      ],
+      "gold_url": "https://eecs.berkeley.edu/book/faculty/",
+      "prediction": "Caltech",
+      "raw_llm_response": "Caltech",
+      "em": 1.0,
+      "f1": 1.0,
+      "url_retrieved": false,
+      "answer_in_chunks": true,
+      "error_type": null,
+      "retrieved_urls": [
+        "https://www2.eecs.berkeley.edu/Faculty/Homepages/demmel.html",
+        "https://www2.eecs.berkeley.edu/Faculty/Lists/CS/emeritus.html",
+        "https://eecs.berkeley.edu/book/2018-2/faculty-2",
+        "https://www2.eecs.berkeley.edu/Faculty/Lists/emeritus.html",
+        "https://www2.eecs.berkeley.edu/Faculty/Lists/CS/faculty.html",
+        "https://www2.eecs.berkeley.edu/Faculty/Lists/faculty.html",
+        "https://www2.eecs.berkeley.edu/Faculty/Homepages/gill.html",
+        "https://www2.eecs.berkeley.edu/Faculty/Lists/list.html",
+        "https://www2.eecs.berkeley.edu/Faculty/Homepages/rjfull.html",
+        "https://eecs.berkeley.edu/research/colloquium/190424-2",
+        "https://eecs.berkeley.edu/research/colloquium/221005-2",
+        "https://www2.eecs.berkeley.edu/Faculty/Awards/society.html",
+        "https://eecs.berkeley.edu/research/colloquium/230510-2",
+        "https://www2.eecs.berkeley.edu/Faculty/Homepages/bokor.html",
+        "https://www2.eecs.berkeley.edu/Faculty/Homepages/klein.html",
+        "https://www2.eecs.berkeley.edu/Faculty/Homepages/white.html",
+        "https://www2.eecs.berkeley.edu/Faculty/Homepages/demmel.html",
+        "https://eecs.berkeley.edu/research/colloquium/170927-2",
+        "https://www2.eecs.berkeley.edu/Faculty/Homepages/kaminow.html",
+        "https://www2.eecs.berkeley.edu/Faculty/Awards/ieee.html"
+      ],
+      "llm_latency_s": 1.3850748538970947
+    },
+    {
+      "question": "How many units of upper division technical electives are required for completion of the CS major?",
+      "gold_answers": [
+        "4"
+      ],
+      "gold_url": "https://eecs.berkeley.edu/resources/undergrads/cs/degree-reqs-upperdiv/",
+      "prediction": "4",
+      "raw_llm_response": "4",
+      "em": 1.0,
+      "f1": 1.0,
+      "url_retrieved": false,
+      "answer_in_chunks": true,
+      "error_type": null,
+      "retrieved_urls": [
+        "https://eecs.berkeley.edu/academics/courses/tech-electives",
+        "https://eecs.berkeley.edu/resources/undergrads/cs/degree-reqs-upperdiv",
+        "https://eecs.berkeley.edu/resources/undergrads/cs/degree-reqs-upperdiv",
+        "https://eecs.berkeley.edu/resources/undergrads/ece-major-information/ece-major-upper-division-degree-requirements",
+        "https://eecs.berkeley.edu/academics/courses/approved-cs-graduate-and-special-topics-courses",
+        "https://eecs.berkeley.edu/academics/undergraduate/compare-majors",
+        "https://www2.eecs.berkeley.edu/Courses/CS",
+        "https://www2.eecs.berkeley.edu/Courses/EE",
+        "https://eecs.berkeley.edu/resources/undergrads/cs/minor",
+        "https://eecs.berkeley.edu/resources/undergrads/eecs-2/degree-reqs-upperdiv-2",
+        "https://eecs.berkeley.edu/academics/undergraduate/eecs-bs/4-year-transfers",
+        "https://eecs.berkeley.edu/academics/undergraduate/compare-majors",
+        "https://eecs.berkeley.edu/academics/undergraduate/cs-ba/faq-8",
+        "https://eecs.berkeley.edu/resources/undergrads/eecs-2/degree-reqs-lowerdiv-2",
+        "https://eecs.berkeley.edu/resources/undergrads/cs/how-to-declare-cs",
+        "https://eecs.berkeley.edu/resources/undergrads/eecs-2/degree-reqs-upperdiv-2",
+        "https://eecs.berkeley.edu/resources/undergrads/cs/minor",
+        "https://eecs.berkeley.edu/academics/graduate/recommended-coursework",
+        "https://eecs.berkeley.edu/resources/grads/meng-2",
+        "https://eecs.berkeley.edu/resources/undergrads/eecs-2/degree-reqs-upperdiv-2"
+      ],
+      "llm_latency_s": 1.0129947662353516
+    },
+    {
+      "question": "What days is the EECS Colloquium hosted?",
+      "gold_answers": [
+        "Wednesdays"
+      ],
+      "gold_url": "https://eecs.berkeley.edu/research/colloquium/",
+      "prediction": "Wednesdays",
+      "raw_llm_response": "Wednesdays",
+      "em": 1.0,
+      "f1": 1.0,
+      "url_retrieved": false,
+      "answer_in_chunks": true,
+      "error_type": null,
+      "retrieved_urls": [
+        "https://www2.eecs.berkeley.edu/Colloquium/Archives/08-09/Fall2008",
+        "https://eecs.berkeley.edu/research/colloquium/formal-models-of-language-generation",
+        "http://eecs.berkeley.edu/research/colloquium",
+        "https://eecs.berkeley.edu/research/colloquium",
+        "https://eecs.berkeley.edu/academics/undergraduate/cs-ba/faq-8",
+        "https://eecs.berkeley.edu/research/colloquium/archives/fall2024",
+        "https://eecs.berkeley.edu/resources/ase/current/payroll/hourly-faq",
+        "https://eecs.berkeley.edu/research/colloquium/archives",
+        "https://eecs.berkeley.edu/research/colloquium/221207-2",
+        "https://eecs.berkeley.edu/research/colloquium/archives/spring-2024-colloquium",
+        "https://eecs.berkeley.edu/research/colloquium/archives/fall2025/engineering-the-future-of-semiconductors-with-atomic-precision-and-ai",
+        "https://eecs.berkeley.edu/research/colloquium/archives/fall2019",
+        "https://eecs.berkeley.edu/research/colloquium/archives/fall2025",
+        "https://eecs.berkeley.edu/research/colloquium/archives/spring2018",
+        "https://eecs.berkeley.edu/book/rising-stars-2020",
+        "https://eecs.berkeley.edu/research/colloquium/archives/spring2019",
+        "https://www2.eecs.berkeley.edu/Faculty/Homepages/atal.html",
+        "https://eecs.berkeley.edu/research/colloquium/archives/spring2017",
+        "https://eecs.berkeley.edu/resources/facilities/room-reservations",
+        "https://eecs.berkeley.edu/research/colloquium/archives/spring2023"
+      ],
+      "llm_latency_s": 0.9768879413604736
     }
   ]
 }
