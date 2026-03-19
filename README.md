@@ -1,6 +1,8 @@
 # CS 288 Assignment 3 — EECS RAG System
 
-A retrieval-augmented generation system that answers factoid questions about UC Berkeley EECS using crawled web pages.
+A retrieval-augmented generation (RAG) system that answers factoid questions about UC Berkeley EECS using crawled web content. It combines sparse (BM25) and dense (FAISS) retrieval with Reciprocal Rank Fusion and an LLM reader.
+
+---
 
 ## Setup
 
@@ -16,104 +18,140 @@ Create a `.env` file with your OpenRouter API key:
 OPENROUTER_API_KEY=your_key_here
 ```
 
-## Quick Start (with pre-built data)
+---
 
-If you already have the `datastore/` folder and `corpus.jsonl`, skip straight to running:
-
-```bash
-bash run.sh questions.txt predictions.txt
-```
-
-The `datastore/` folder must contain:
+## Architecture
 
 ```
-datastore/
-  chunks.json
-  bm25_index.pkl
-  faiss_index.bin
-  embedding_model/     # all-MiniLM-L6-v2 saved locally
+┌──────────────────────────── Offline ─────────────────────────────┐
+│                                                                   │
+│  corpus.jsonl ──▶ Clean & Chunk ──┬──▶ BM25 Index ──┐            │
+│                    (~500 chars)   │                  ├──▶ datastore/
+│                                   └──▶ MiniLM ───▶ FAISS Index ──┘
+└───────────────────────────────────────────────────────────────────┘
+
+┌──────────────────────────── Online ──────────────────────────────┐
+│                                                                   │
+│  Question ──┬──▶ BM25  (top 20) ──┐                              │
+│             │                     ├──▶ RRF (top 5) ──▶ LLM ──▶ Answer
+│             └──▶ FAISS (top 20) ──┘                              │
+└───────────────────────────────────────────────────────────────────┘
 ```
 
-You can copy these files in from another machine instead of rebuilding them.
+---
 
-## Full Pipeline (from scratch)
+## Offline Phase — Building the Index
 
-### 1. Crawl the EECS website
+Run once to prepare the retrieval datastore. Pre-built files can be copied from another machine to skip these steps.
+
+### 1. Crawl
 
 ```bash
 python3 crawl_eecs.py
 ```
 
-Produces `corpus.jsonl` — one JSON object per page with `url`, `title`, and `text` fields.
+Recursively crawls the EECS website and writes `corpus.jsonl` — one record per page with `url`, `title`, and `text`.
 
-### 2. Build the retrieval index
+To add individual pages without re-crawling:
+
+```bash
+python3 inject_url.py https://example.com/page
+```
+
+Fetches the URL (HTML or PDF), extracts text, deduplicates against the existing corpus, and appends a new entry to `corpus.jsonl`.
+
+### 2. Build Index
 
 ```bash
 python3 build_index.py
 ```
 
-Reads `corpus.jsonl`, cleans the text, chunks it into ~500-char passages, and builds BM25 + FAISS indices. Saves everything to `datastore/`.
+Reads `corpus.jsonl`, strips boilerplate, splits pages into ~500-character overlapping chunks, and builds two indices saved to `datastore/`:
 
-### 3. Run the RAG system
+| File | Contents |
+|---|---|
+| `chunks.json` | Raw chunk text and metadata |
+| `bm25_index.pkl` | Sparse BM25 index for keyword matching |
+| `faiss_index.bin` | Dense FAISS index (all-MiniLM-L6-v2, 384-dim) |
+| `embedding_model/` | Model weights saved locally |
+
+---
+
+## Online Phase — Running the System
+
+### Quick Start
+
+If `datastore/` and `corpus.jsonl` already exist:
 
 ```bash
 bash run.sh questions.txt predictions.txt
 ```
 
-Reads one question per line from the input file, writes one answer per line to the output file.
+Reads one question per line, writes one answer per line.
 
-## How It Works
+### How Retrieval Works
 
-```
-┌─────────────────────────── Offline (build_index.py) ───────────────────────────┐
-│                                                                                │
-│  corpus.jsonl ──▶ Clean & Chunk ──┬──▶ BM25 Index ──────┐                      │
-│                   (~500 chars)    │                      ├──▶ datastore/        │
-│                                   └──▶ MiniLM Embeddings ──▶ FAISS Index ──┘      │
-│                                                                                │
-└────────────────────────────────────────────────────────────────────────────────-┘
+For each question, `rag.py` queries BM25 (top 20) and FAISS (top 20) in parallel. The two ranked lists are merged via Reciprocal Rank Fusion (RRF) and the top 5 chunks are passed as context to `meta-llama/llama-3.1-8b-instruct` via OpenRouter. The LLM is prompted to extract the shortest possible answer (1–10 words) directly from the context. The response is post-processed to strip quotes, prefixes, and trailing punctuation.
 
-┌─────────────────────────── Runtime (rag.py) ───────────────────────────────────┐
-│                                                                                │
-│  Question ──┬──▶ BM25 (top 20) ──┐                                             │
-│             │                    ├──▶ RRF Merge (top 5) ──▶ LLM ──▶ Answer     │
-│             └──▶ FAISS (top 20) ─┘                                             │
-│                                                                                │
-└────────────────────────────────────────────────────────────────────────────────-┘
-```
+---
 
-The system has two phases:
+## Evaluation & Diagnostics
 
-**Offline** — `build_index.py` reads the crawled corpus, strips boilerplate (breadcrumbs, nav elements), and splits each page into ~500-character chunks with overlap. Each chunk is indexed in two ways: a BM25 sparse index for keyword matching, and a FAISS dense index using `all-MiniLM-L6-v2` embeddings (384-dim, ~80MB) for semantic similarity.
-
-**Runtime** — For each question, `rag.py` queries both indices in parallel. BM25 catches exact keyword matches (e.g. names, course numbers). FAISS catches semantically similar passages even when wording differs. The two ranked lists are merged using Reciprocal Rank Fusion (RRF) and the top 5 chunks are kept.
-
-These chunks are passed as context to `meta-llama/llama-3.1-8b-instruct` via OpenRouter. The prompt instructs the LLM to extract the shortest possible answer (1–10 words) directly from the context. The raw response is post-processed to strip quotes, prefixes, and trailing punctuation.
-
-## Testing & Evaluation
+### Test the RAG system
 
 ```bash
-python3 test_rag.py                                    # run on reference.jsonl (10 questions)
-python3 test_rag.py --dataset qa_dataset.jsonl         # run on the full QA dataset
-python3 test_rag.py --question "Who is Dan Klein?"     # test a single question
+python3 test_rag.py                                   # run on reference.jsonl (10 questions)
+python3 test_rag.py --dataset qa_dataset.jsonl        # run on the full QA dataset
+python3 test_rag.py --question "Who is Dan Klein?"    # single question
 ```
 
-Shows per-question diagnostics (retrieved chunks, retrieval recall, error classification) and aggregate EM/F1 metrics.
+Reports per-question diagnostics (retrieved chunks, retrieval recall, error classification) and aggregate Exact Match / F1 metrics.
 
-## Other Scripts
+### Diagnose failures
 
-| Script | Purpose |
+```bash
+python3 diagnose.py
+```
+
+Runs the full pipeline on a QA dataset and categorises each result as one of:
+
+| Label | Meaning |
 |---|---|
-| `generate_qa.py` | Generate QA pairs from the corpus using LLMs |
-| `measure_iaa.py` | Measure inter-annotator agreement on the QA dataset |
-| `evaluate_local.py` | Batch evaluation with EM/F1 metrics |
-| `create_submission_zip.sh` | Package files for Gradescope submission |
-| `inject_url.py` | Manually inject one or more URLs into `corpus.jsonl` without re-crawling entire site. |
-| `diagnose.py` | Failure diagnosis across a QA dataset. Categorises each prediction as `CORRECT`, `PARTIAL`, `READER_FAIL`, `RERANK_MISS`, or `RETRIEVAL_MISS`. |
+| `CORRECT` | Answer matches gold |
+| `PARTIAL` | Partial F1 match |
+| `READER_FAIL` | Correct chunk retrieved but LLM answered wrong |
+| `RERANK_MISS` | Correct chunk retrieved but dropped by reranker |
+| `RETRIEVAL_MISS` | Correct chunk never retrieved |
+
+Prints per-question details and a summary with actionable recommendations.
+
+### Local batch evaluation
+
+```bash
+python3 evaluate_local.py
+```
+
+Runs EM/F1 evaluation over a predictions file without calling the LLM.
+
+---
 
 ## QA Dataset
 
-The QA dataset (`qa_dataset.jsonl`) was created by hand rather than generated by an LLM. Questions and answers were written and verified manually to ensure accuracy and relevance to the EECS website content.
+`qa_dataset.jsonl` was written **by hand** — questions and gold answers were manually authored and verified against the EECS website. This replaces an earlier LLM-generated dataset to ensure factual accuracy.
+
+---
+
+## Supporting Scripts
+
+| Script | Purpose |
+|---|---|
+| `llm.py` | Thin wrapper around the OpenRouter API |
+| `generate_qa.py` | (Legacy) Generate QA pairs from the corpus via LLM |
+| `measure_iaa.py` | Measure inter-annotator agreement on the QA dataset |
+| `evaluate-v1.1.py` | Official Gradescope evaluation script (EM/F1) |
+| `create_submission_zip.sh` | Package files for Gradescope submission |
+
+---
 
 ## Submission
 
