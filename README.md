@@ -23,19 +23,26 @@ OPENROUTER_API_KEY=your_key_here
 ## Architecture
 
 ```
-┌──────────────────────────── Offline ─────────────────────────────┐
-│                                                                   │
-│  corpus.jsonl ──▶ Clean & Chunk ──┬──▶ BM25 Index ──┐            │
-│                    (~500 chars)   │                  ├──▶ datastore/
-│                                   └──▶ MiniLM ───▶ FAISS Index ──┘
-└───────────────────────────────────────────────────────────────────┘
+┌─────────────────────────── Offline ────────────────────────────────┐
+│                                                                    │
+│  corpus.jsonl ──▶ Clean & Chunk ──┬──▶ BM25 Index ──┐              │
+│                    (~500 chars)   │                 ├──▶ datastore/│
+│                                   └──▶ MiniLM ──▶ FAISS Index ──┘  │
+└────────────────────────────────────────────────────────────────────┘
 
-┌──────────────────────────── Online ──────────────────────────────┐
-│                                                                   │
-│  Question ──┬──▶ BM25  (top 20) ──┐                              │
-│             │                     ├──▶ RRF (top 5) ──▶ LLM ──▶ Answer
-│             └──▶ FAISS (top 20) ──┘                              │
-└───────────────────────────────────────────────────────────────────┘
+┌─────────────────────────── Online ─────────────────────────────────┐
+│                                                                    │
+│  Question ──▶ LLM Query Expansion (3 phrasings)                    │
+│                 │                                                  │
+│                 ├──▶ BM25  (top 20 per query) ──┐                  │
+│                 │                               ├──▶ RRF (top 20)  │
+│                 └──▶ FAISS (top 20 per query) ──┘       │          │
+│                                                         │          │
+│                                          Cross-Encoder Rerank      │
+│                                                (top 5)             │
+│                                                  │                 │
+│                                                 LLM ──▶ Answer     │
+└────────────────────────────────────────────────────────────────────┘
 ```
 
 ---
@@ -91,7 +98,12 @@ Reads one question per line, writes one answer per line.
 
 ### How Retrieval Works
 
-For each question, `rag.py` queries BM25 (top 20) and FAISS (top 20) in parallel. The two ranked lists are merged via Reciprocal Rank Fusion (RRF) and the top 5 chunks are passed as context to `meta-llama/llama-3.1-8b-instruct` via OpenRouter. The LLM is prompted to extract the shortest possible answer (1–10 words) directly from the context. The response is post-processed to strip quotes, prefixes, and trailing punctuation.
+For each question, `rag.py` runs a four-step pipeline:
+
+1. **Query expansion** — The LLM generates 3 alternative phrasings of the question. All variants are used for retrieval, improving recall for ambiguous questions.
+2. **Hybrid retrieval** — Each query variant is run against BM25 (top 20) and FAISS (top 20). BM25 catches exact keyword matches (names, course numbers); FAISS catches semantically similar passages. All results are merged with Reciprocal Rank Fusion (RRF), keeping the top 20 candidates.
+3. **Cross-encoder reranking** — The top 20 candidates are reranked with a cross-encoder, which scores each (question, chunk) pair jointly for more precise relevance. The top 5 are kept.
+4. **Answer generation** — The top 5 chunks are passed as context to an LLM via OpenRouter. The LLM extracts the shortest correct answer (1–10 words). The response is post-processed to strip quotes, prefixes, and trailing punctuation.
 
 ---
 
